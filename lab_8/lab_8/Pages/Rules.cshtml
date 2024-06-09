@@ -1,0 +1,57 @@
+﻿@page
+@model RulesModel
+@{
+    ViewData["Title"] = "Rules";
+    var rules = HttpContext.Session.GetString("rules");
+    List<string> rulesList = DeserializeList(rules);
+}
+
+<h2>Reguły Fight Clubu</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="ruleInput">Dodaj nową regułę:</label>
+        <input type="text" class="form-control" id="ruleInput" name="rule" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>
+
+@if (rulesList.Any())
+{
+    <h3>Zgłoszone reguły:</h3>
+    <ol>
+        @foreach (var rule in rulesList)
+        {
+            <li>@rule</li>
+        }
+    </ol>
+}
+else
+{
+    <p>Brak zgłoszonych reguł.</p>
+}
+
+@{
+    if (Request.Method == "POST")
+    {
+        var newRule = Request.Form["rule"];
+        rulesList.Add(newRule);
+        HttpContext.Session.SetString("rules", SerializeList(rulesList));
+        Response.Redirect("Rules");
+    }
+}
+
+@functions {
+    public List<string> DeserializeList(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return new List<string>();
+        else
+            return value.Split(',').ToList();
+    }
+
+    public string SerializeList(List<string> list)
+    {
+        return string.Join(',', list);
+    }
+}

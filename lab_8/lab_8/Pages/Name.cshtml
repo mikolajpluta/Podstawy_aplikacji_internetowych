@@ -1,0 +1,18 @@
+﻿@page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    @{
+        var name = Request.Form["name"];
+        if (string.IsNullOrEmpty(name))
+        {
+            name = "Robert Paulson";
+        }
+    }
+    <h1>Hello, @name!</h1>
+</body>
+</html>

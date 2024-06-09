@@ -1,0 +1,15 @@
+﻿@page
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formularz</title>
+</head>
+<body>
+    <form method="post" action="/Name">
+        @Html.AntiForgeryToken()
+        <label for="name">Imię:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <input type="submit" value="Wyślij">
+    </form>
+</body>
+</html>
